@@ -1,0 +1,9 @@
+#python
+__pycache__/
+*.pyc
+*.pyd
+# Distribution / packaging
+.Python
+#venv
+.venv/
+.env

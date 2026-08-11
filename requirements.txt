@@ -12,4 +12,6 @@ langchain-openai
 # Image Processing
 Pillow
 
-
+# API server
+fastapi
+uvicorn[standard]

@@ -95,9 +95,14 @@ def parse_prescription(image_bytes: bytes, model: str = "qwen/qwen3.6-27b") -> P
     data = _prepare(image_bytes)
     data_url = f"data:image/jpeg;base64,{base64.b64encode(data).decode()}"
 
+    # Support either GROQ_API_KEY (expected) or GROK_API_KEY (typo sometimes used in .env)
+    api_key = os.getenv("GROQ_API_KEY") or os.getenv("GROK_API_KEY")
+    if not api_key:
+        raise EnvironmentError("GROQ_API_KEY (or GROK_API_KEY) not found in environment")
+
     llm = ChatOpenAI(
         model=model,
-        api_key=os.getenv("GROQ_API_KEY"),
+        api_key=api_key,
         base_url="https://api.groq.com/openai/v1",
         temperature=0,
         max_tokens=4096,          # room to finish thinking AND emit the JSON
